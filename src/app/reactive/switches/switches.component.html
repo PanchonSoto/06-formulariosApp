@@ -1,7 +1,7 @@
 <h2>Reactivos: Switches</h2>
 <hr />
 
-<form>
+<form [formGroup]="miForm" (ngSubmit)="guardar()">
   <!-- Radio -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Genero</label>
@@ -11,7 +11,7 @@
           class="form-check-input"
           type="radio"
           value="M"
-          name="radioGenero"
+          formControlName="genero"
           id="flexRadioDefault1"
         />
         <label class="form-check-label" for="flexRadioDefault1">
@@ -23,7 +23,7 @@
           class="form-check-input"
           type="radio"
           value="F"
-          name="radioGenero"
+          formControlName="genero"
           id="flexRadioDefault2"
         />
         <label class="form-check-label" for="flexRadioDefault2">
@@ -41,12 +41,13 @@
         <input
           class="form-check-input"
           type="checkbox"
+          formControlName="notificaciones"
           role="switch"
           id="flexSwitchCheckChecked"
         />
 
         <label class="form-check-label" for="flexSwitchCheckChecked">
-            Recibir notificacion
+          Recibir notificacion
         </label>
       </div>
     </div>
@@ -57,7 +58,12 @@
     <label class="col-sm-3 col-form-label"></label>
     <div class="col-sm-9">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox"  id="flexCheckDefault"/>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="flexCheckDefault"
+          formControlName="condiciones"
+        />
         <label class="form-check-label" for="flexCheckDefault">
           Terminos y condiciones de uso
         </label>
@@ -69,18 +75,18 @@
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label"></label>
     <div class="col-sm-9">
-      <button class="btn btn-primary float-end">Guardar</button>
+      <button type="submit" class="btn btn-primary float-end">Guardar</button>
     </div>
   </div>
 </form>
 
-<!-- <h5>Valor del formulario</h5>
+<h5>Valor del formulario</h5>
 <pre>{{ miForm.value | json }}</pre>
-<br>
+<br />
+
+<h5>Persona</h5>
+<pre>{{ persona | json }}</pre>
+<br />
 
 <h5>Valid</h5>
-<pre>{{ miForm.value | json }}</pre>
-<br>
-
-<pre>Condiciones: </pre>
- -->
+<pre>{{ miForm.valid }}</pre>
