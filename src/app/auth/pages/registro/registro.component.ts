@@ -12,13 +12,18 @@ export class RegistroComponent implements OnInit {
 
 
   miFormulario: FormGroup = this.fbuilder.group({
-    nombre: ['',[Validators.required, Validators.pattern(this.validatorService.nombreApellidoPattern)] ],
-    email: ['',[Validators.required, Validators.pattern(this.validatorService.emailPattern)] ],
-    username: ['', [Validators.required, this.validatorService.noPuedeSerStrider]],
+    nombre: ['',[Validators.required, Validators.pattern(this.vs.nombreApellidoPattern)]],
+    email: ['',[Validators.required, Validators.pattern(this.vs.emailPattern)]],
+    username: ['', [Validators.required, this.vs.noPuedeSerStrider]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    password2: ['', [Validators.required]]
+  },
+  {
+    Validators: [this.vs.camposIguales('password','passwords2')]
   });
 
   constructor(private fbuilder: FormBuilder,
-              private validatorService: ValidatorService) { }
+              private vs: ValidatorService) { }
 
   ngOnInit(): void {
 
