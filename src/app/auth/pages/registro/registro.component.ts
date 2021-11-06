@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 import { ValidatorService } from 'src/app/shared/validator.service';
+import { EmailValidatorService } from 'src/app/shared/validator/email-validator.service';
 import { nombreApellidoPattern, emailPattern, noPuedeSerStrider } from 'src/app/shared/validator/validaiones';
 
 @Component({
@@ -12,18 +13,19 @@ export class RegistroComponent implements OnInit {
 
 
   miFormulario: FormGroup = this.fbuilder.group({
-    nombre: ['',[Validators.required, Validators.pattern(this.vs.nombreApellidoPattern)]],
-    email: ['',[Validators.required, Validators.pattern(this.vs.emailPattern)]],
+    nombre: ['', [Validators.required, Validators.pattern(this.vs.nombreApellidoPattern)]],
+    email: ['', [Validators.required, Validators.pattern(this.vs.emailPattern)], [this.emailVal]],
     username: ['', [Validators.required, this.vs.noPuedeSerStrider]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     password2: ['', [Validators.required]]
   },
-  {
-    Validators: [this.vs.camposIguales('password','passwords2')]
-  });
+    {
+      Validators: [this.vs.camposIguales('password', 'passwords2')]
+    });
 
   constructor(private fbuilder: FormBuilder,
-              private vs: ValidatorService) { }
+    private vs: ValidatorService,
+    private emailVal: EmailValidatorService) { }
 
   ngOnInit(): void {
 
@@ -36,12 +38,12 @@ export class RegistroComponent implements OnInit {
 
   campoNoValido(campo: string) {
     return this.miFormulario.get(campo)?.invalid
-            && this.miFormulario.get(campo)?.touched;
+      && this.miFormulario.get(campo)?.touched;
   }
 
   submitForm() {
     console.log(this.miFormulario.value);
-    
+
     this.miFormulario.markAllAsTouched();
   }
 
